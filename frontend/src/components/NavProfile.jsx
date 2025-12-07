@@ -39,11 +39,12 @@ const NavProfile = ({ hidden = false }) => {
                 <div className="hidden sm:block">
                     <SearchBar />
                 </div>
-
-                <button className="flex items-center gap-2 bg-[#1b9bf0] hover:bg-green-700 text-white font-semibold px-3 py-1 rounded-xl shadow-md transition cursor-pointer">
-                    <FontAwesomeIcon icon={["fas", "arrow-down"]} style={{ color: "#ffffff" }} />
-                    <span className="hidden sm:inline-block">Company Profile</span>
-                </button>
+                <a href="../../public/sample.pdf" target="_blank" rel="noopener noreferrer">
+                    <button className="flex items-center gap-2 bg-[#1b9bf0] hover:bg-green-700 text-white font-semibold px-3 py-1 rounded-xl shadow-md transition cursor-pointer">
+                        <FontAwesomeIcon icon={["fas", "arrow-down"]} style={{ color: "#ffffff" }} />
+                        <span className="hidden sm:inline-block">Company Profile</span>
+                    </button>
+                </a>
             </div>
 
             {/* Socials media */}
