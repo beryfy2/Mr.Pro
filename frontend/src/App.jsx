@@ -9,6 +9,8 @@ import ContactSection from './pages/ContactSection'
 import VideoConsultBanner from './components/VideoConsultBanner'
 import WhyUs from './pages/WhyUs'
 import Footer from './components/Footer'
+import IndustriesSection from './components/IndustriesSection'
+import TrustedBy from './components/TrustBy'
 
 const App = () => {
   return (
@@ -22,6 +24,8 @@ const App = () => {
 
       <TypingBanner />
       
+      <IndustriesSection />
+      <TrustedBy />
 
       <ContactSection />
       <VideoConsultBanner />

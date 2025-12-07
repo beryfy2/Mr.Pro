@@ -1,0 +1,98 @@
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+library.add(fas, far, fab);
+
+const INDUSTRIES = [
+    // row 1
+    { label: "Apparels", icon: "fa-solid fa-shirt" },
+    { label: "Gems and Jewellery", icon: "fa-solid fa-gem" },
+    { label: "Chemicals", icon: "fa-solid fa-flask" },
+    { label: "Hotel", icon: "fa-solid fa-hotel" },
+    { label: "Health & Medical", icon: "fa-solid fa-user-doctor" },
+    { label: "Tea & Coffee", icon: "fa-solid fa-mug-hot" },
+    { label: "Rubber", icon: "fa-solid fa-circle-dot" },
+    { label: "Handloom", icon: "fa-solid fa-yarn" },
+    { label: "Automobile", icon: "fa-solid fa-car-side" },
+
+    // row 2
+    { label: "Footwear", icon: "fa-solid fa-shoe-prints" },
+    { label: "Tourism & Hospitality", icon: "fa-solid fa-umbrella-beach" },
+    { label: "Telecom", icon: "fa-solid fa-tower-broadcast" },
+    { label: "Railways", icon: "fa-solid fa-train" },
+    { label: "Food Processing", icon: "fa-solid fa-bowl-food" },
+    { label: "Capital Goods", icon: "fa-solid fa-industry" },
+    { label: "NGOs", icon: "fa-solid fa-people-group" },
+    { label: "IT & BPM", icon: "fa-solid fa-laptop-code" },
+    { label: "Tobacco", icon: "fa-solid fa-smoking" },
+
+    // row 3
+    { label: "Furniture", icon: "fa-solid fa-couch" },
+    { label: "Consumer Electronics", icon: "fa-solid fa-tv" },
+    { label: "Oils & Gas", icon: "fa-solid fa-gas-pump" },
+    { label: "Liquor", icon: "fa-solid fa-wine-bottle" },
+    { label: "Dangerous Goods", icon: "fa-solid fa-skull-crossbones" },
+    { label: "Recycling", icon: "fa-solid fa-recycle" },
+    { label: "Silk", icon: "fa-solid fa-ribbon" },
+    { label: "Steel", icon: "fa-solid fa-industry" },
+    { label: "Constructions", icon: "fa-solid fa-city" },
+];
+
+const IndustriesSection = () => {
+    return (
+        <section className="bg-white py-12">
+            <div className="max-w-6xl mx-auto px-3">
+                <div className=" rounded-[20px] border border-green-400 bg-white shadow-[0_14px_30px_rgba(0,0,0,0.1)] px-1.5 py-5 md:px-3">
+
+                    {/* Heading */}
+                    <div className="text-center mb-8">
+                        <h2 className="text-3xl md:text-4xl font-bold text-sky-900">
+                            Industries Served by <span className="text-sky-900">Company</span>
+                        </h2>
+                        <div className="mt-3 h-1 w-32 bg-green-500 mx-auto rounded-full" />
+                    </div>
+
+                    {/* Outer frame */}
+                    <div className="rounded-4xl border border-green-400 bg-white shadow-[0_16px_40px_rgba(0,0,0,0.12)] overflow-hidden">
+                        {/* solid blue background */}
+                        <div className="bg-[#0064a8]">
+                            {/* 9 x 3 strict grid (tightly packed) */}
+                            <div className="grid grid-cols-3 md:grid-cols-6 xl:grid-cols-9">
+                                {INDUSTRIES.map((item) => (
+                                    <IndustryTile
+                                        key={item.label}
+                                        label={item.label}
+                                        icon={item.icon}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const IndustryTile = ({ label, icon }) => (
+    <div className="relative group border-r border-b border-[#005591] last:border-r-0 xl:last:border-r border-opacity-60">
+        <div className="flex h-[105px] md:h-[115px] xl:h-[120px] flex-col items-center justify-center gap-2 px-2 text-center bg-[#0075c4] transition-colors duration-200 group-hover:bg-[#005f9c]">
+            <FontAwesomeIcon
+                icon={icon}
+                className="text-[26px] md:text-[28px] text-[#b9ff16]"
+            />
+            <p className="text-white text-[11px] md:text-[12px] font-medium leading-tight">
+                {label}
+            </p>
+        </div>
+
+        {/* green underline on hover, like in reference */}
+        <div className="pointer-events-none absolute bottom-0 left-4 right-4 h-1 rounded-full bg-[#b9ff16] scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-200" />
+    </div>
+);
+
+export default IndustriesSection;

@@ -1,0 +1,103 @@
+/* ✅ Wider centered wrapper with fading edges */
+.trusted-wrapper {
+    position: relative;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+/* ✅ Left & right fading blur */
+.trusted-wrapper::before,
+.trusted-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.trusted-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #ffffff 70%, rgba(255, 255, 255, 0));
+}
+
+.trusted-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #ffffff 70%, rgba(255, 255, 255, 0));
+}
+
+.trusted-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.trusted-strip {
+    display: flex;
+    gap: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Animations */
+.trusted-row-top {
+    animation: trusted-marquee-left 28s linear infinite;
+}
+
+.trusted-row-bottom {
+    animation: trusted-marquee-right 28s linear infinite;
+}
+
+/* Pause animation when hovering on row */
+.trusted-row:hover {
+    animation-play-state: paused;
+}
+
+@keyframes trusted-marquee-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes trusted-marquee-right {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Brand cards */
+.brand-card {
+    min-width: 175px;
+    height: 95px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 14px rgba(15, 23, 42, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 26px;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid transparent;
+}
+
+/* Hover effect Outline */
+.brand-card:hover {
+    border: 2px solid #22c55e;
+    box-shadow: 0 14px 24px rgba(15, 23, 42, 0.12);
+}
+
+/* Logo size */
+.brand-logo {
+    max-height: 50px;
+    max-width: 100%;
+    object-fit: contain;
+}
