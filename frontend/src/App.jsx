@@ -11,6 +11,7 @@ import WhyUs from './pages/WhyUs'
 import Footer from './components/Footer'
 import IndustriesSection from './components/IndustriesSection'
 import TrustedBy from './components/TrustBy'
+import MediaCoverage from './components/MediaCoverage'
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
       
       <IndustriesSection />
       <TrustedBy />
+      <MediaCoverage />
 
       <ContactSection />
       <VideoConsultBanner />
