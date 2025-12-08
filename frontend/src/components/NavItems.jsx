@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faChevronDown,
-    faFire,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faFire } from "@fortawesome/free-solid-svg-icons";
 
 const links = [
     "Business Setup",
@@ -19,17 +16,30 @@ const links = [
     "More",
 ];
 
-export default function NavItems({
-    transparent = false,
-}) {
+export default function NavItems({ transparent = false }) {
     const solidBg = "bg-[#0f4260]";
     const glassBg = "bg-[#0f4260]/40";
     const finalBg = transparent ? glassBg : solidBg;
 
     const [openMenu, setOpenMenu] = useState(null);
+    const closeTimer = useRef(null);
 
-    const handleOpen = (label) => {
-        // toggle on click
+    const open = (label) => {
+        if (closeTimer.current) {
+            clearTimeout(closeTimer.current);
+            closeTimer.current = null;
+        }
+        setOpenMenu(label);
+    };
+
+    const scheduleClose = () => {
+        closeTimer.current = setTimeout(() => {
+            setOpenMenu(null);
+        }, 150); // small delay for smoothness
+    };
+
+    const toggleClick = (label) => {
+        // optional click toggle
         setOpenMenu((prev) => (prev === label ? null : label));
     };
 
@@ -39,7 +49,6 @@ export default function NavItems({
                 }`}
         >
             <div className="max-w-[1400px] h-15 mx-auto px-6 py-4 flex items-center justify-between relative">
-
                 {/* Logo */}
                 <div className="flex items-center gap-3">
                     <span className="text-white font-semibold hidden sm:inline">
@@ -49,20 +58,41 @@ export default function NavItems({
 
                 {/* Nav links */}
                 <ul className="hidden lg:flex items-center gap-6 text-white text-[15px] font-medium">
-                    {links.map((label) => (
-                        <li
-                            key={label}
-                            className="relative flex items-center gap-1 cursor-pointer hover:text-green-400 transition"
-                            onMouseEnter={() => setOpenMenu(label)}
-                            onClick={() => handleOpen(label)}
-                        >
-                            <span>{label}</span>
-                            <FontAwesomeIcon
-                                icon={faChevronDown}
-                                className="text-green-400 text-xs"
-                            />
-                        </li>
-                    ))}
+                    {links.map((label) => {
+                        const isOpen = openMenu === label;
+
+                        return (
+                            // wrapper includes both button + dropdown
+                            <li
+                                key={label}
+                                className="relative"
+                                onMouseEnter={() => open(label)}
+                                onMouseLeave={scheduleClose}
+                            >
+                                <button
+                                    type="button"
+                                    className={`flex items-center gap-1 cursor-pointer transition px-2 py-1 ${isOpen ? "text-green-400" : "hover:text-green-400"
+                                        }`}
+                                    onClick={() => toggleClick(label)}
+                                >
+                                    <span>{label}</span>
+                                    <FontAwesomeIcon
+                                        icon={faChevronDown}
+                                        className={`text-green-400 text-xs transition-transform ${isOpen ? "rotate-180" : ""
+                                            }`}
+                                    />
+                                </button>
+
+                                {/* dropdowns */}
+                                {isOpen &&
+                                    (label === "Business Setup" ? (
+                                        <BusinessSetupMenu />
+                                    ) : (
+                                        <SimpleMenu title={label} />
+                                    ))}
+                            </li>
+                        );
+                    })}
                 </ul>
 
                 {/* Right icons */}
@@ -71,23 +101,22 @@ export default function NavItems({
                     <i className="fa-brands fa-facebook-f cursor-pointer" />
                     <i className="fa-brands fa-instagram cursor-pointer" />
                 </div>
-
-                {openMenu === "Business Setup" && <BusinessSetupMenu />}
-                {openMenu &&
-                    openMenu !== "Business Setup" && <SimpleMenu title={openMenu} />}
             </div>
         </div>
     );
 }
 
-// Business Setup Mega Menu 
 
-function BusinessSetupMenu() {
+
+function BusinessSetupMenu({ onMouseEnter, onMouseLeave }) {
     return (
-        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-7xl max-w-[95vw] z-50">
+        <div
+            className="absolute left-[580px] -translate-x-1/2 top-full mt-2 w-7xl max-w-[95vw] z-50"
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+        >
             <div className="bg-white rounded-3xl shadow-2xl border-t-4 border-green-400 overflow-hidden">
                 <div className="flex">
-
                     {/* Left column */}
                     <div className="w-1/4 border-r">
                         <div className="bg-sky-900 text-white font-semibold px-4 py-2">
@@ -197,7 +226,6 @@ function BusinessSetupMenu() {
                             ))}
                         </ul>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -205,18 +233,24 @@ function BusinessSetupMenu() {
 }
 
 
-function SimpleMenu({ title }) {
+
+function SimpleMenu({ title, onMouseEnter, onMouseLeave }) {
     return (
-        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-160 max-w-[90vw] z-40">
-            <div className="bg-white rounded-2xl shadow-xl border-t-4 border-green-400">
-                <div className="px-6 py-4">
+        <div
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[420px] max-w-[92vw] z-50"
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+        >
+            <div className="bg-white rounded-2xl shadow-2xl border-t-4 border-green-400">
+                <div className="px-6 py-5">
                     <h4 className="text-sky-900 font-semibold mb-3">{title}</h4>
-                    <ul className="space-y-1 text-sm text-gray-800">
+
+                    <ul className="space-y-2 text-sm text-gray-800">
                         {["Option 1", "Option 2", "Option 3"].map((item) => (
                             <li key={item}>
                                 <button
                                     type="button"
-                                    className="w-full text-left px-2 py-1 hover:bg-sky-50 cursor-pointer"
+                                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-sky-50 cursor-pointer transition"
                                     onClick={() => console.log(`${title} -> ${item}`)}
                                 >
                                     {item}
